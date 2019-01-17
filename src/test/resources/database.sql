@@ -22,3 +22,18 @@ create table if not exists employee(
   primary key(id),
   foreign key(department_id) references department(id)
 );
+
+------------------------------------------------------------------------
+create table if not exists type_int(
+  id integer,
+  col1 integer not null,
+  col2 integer(4) not null,
+  col3 integer not null unique
+);
+
+create table if not exists type_varchar(
+  id integer,
+  col1 varchar(10) not null,
+  col2 varchar(4) not null,
+  col3 varchar(10) not null unique
+);

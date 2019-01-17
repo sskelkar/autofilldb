@@ -1,8 +1,11 @@
-package testdatasetup;
+package autofilldb;
 
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class JdbcHelper {
@@ -17,7 +20,7 @@ public class JdbcHelper {
     this.jdbcTemplate = jdbcTemplate;
   }
 
-  public Object populate(String tableName, Map<String,Object> columnValues) {
+  public Object populate(String tableName, Map<String,Object> valuesProvidedByUser) {
     Map<String, Object> columnsToPopulate = new HashMap<>();
     try {
       jdbcTemplate.query("desc " + tableName, rch -> {
@@ -32,10 +35,32 @@ public class JdbcHelper {
       throw new RuntimeException(e.getMessage());
     }
     System.out.println(columnsToPopulate);
-    return null;
+
+    valuesProvidedByUser.forEach((key, value) -> columnsToPopulate.put(key, value));
+
+    String query = String.format("insert into %s (", tableName);
+
+    List<String> columns = new ArrayList<>();
+    List<String> values = new ArrayList<>();
+    columnsToPopulate.forEach((key, value) -> {
+      columns.add(key);
+      values.add(value.toString());
+    });
+    query += Strings.join(columns, ',');
+    query += ") values(";
+    query += Strings.join(values, ',');
+    query += ")";
+    System.out.println(query);
+    jdbcTemplate.execute(query);
+    return null;//return primary key value
   }
 
   private Object getValue(String type, String key, String defaultValue) {
+      if(type.startsWith("int")) {
+        return new IntValue(type, key, defaultValue).value();
+      } else if(type.startsWith("varchar")) {
+        return new VarcharValue(type, key, defaultValue).value();
+      }
       return null;
   }
 }

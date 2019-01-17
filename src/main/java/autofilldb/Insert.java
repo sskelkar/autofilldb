@@ -1,4 +1,4 @@
-package testdatasetup;
+package autofilldb;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -25,7 +25,6 @@ public class Insert {
   }
 
   public Object go() {
-    System.out.println("goooo");
     return new JdbcHelper(jdbcTemplate).populate(tableName, columnValues);
   }
 }
