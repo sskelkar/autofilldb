@@ -3,7 +3,7 @@ package testdatasetup;
 import autofilldb.Insert;
 import org.junit.Test;
 
-public class AutoFillTest extends TestDataSetupApplicationTests {
+public class AutoFillTest extends AutoFillDbApplicationTests {
 
   @Test
   public void type_int() {

@@ -6,10 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
 @SpringBootApplication
-public class TestDataSetupApplication {
+public class AutoFillDbApplication {
 
   public static void main(String[] args) {
-    ConfigurableApplicationContext app = SpringApplication.run(TestDataSetupApplication.class, args);
+    ConfigurableApplicationContext app = SpringApplication.run(AutoFillDbApplication.class, args);
     EmployeeRepository employeeRepository = app.getBean(EmployeeRepository.class);
 
     employeeRepository.findAll()
@@ -18,6 +18,4 @@ public class TestDataSetupApplication {
           + emp.getDepartment().getName() + " - " + emp.getDepartment().getOrganisation().getCountryCode())
       );
   }
-
 }
-

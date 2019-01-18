@@ -10,7 +10,7 @@ import javax.sql.DataSource;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = TestConfiguration.class)
-public abstract class TestDataSetupApplicationTests extends AbstractTransactionalJUnit4SpringContextTests {
+public abstract class AutoFillDbApplicationTests extends AbstractTransactionalJUnit4SpringContextTests {
 	@Autowired
 	private DataSource dataSource;
 
