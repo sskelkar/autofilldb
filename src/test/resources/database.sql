@@ -37,3 +37,15 @@ create table if not exists type_varchar(
   col2 varchar(4) not null,
   col3 varchar(10) not null unique
 );
+
+create table if not exists type_datetime(
+  id integer,
+  col1 datetime not null,
+  col2 datetime not null unique
+);
+
+create table if not exists id_tracker(
+  int_type integer,
+  datetime_type integer
+)
+insert into id_tracker values(0,0);

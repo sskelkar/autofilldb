@@ -20,11 +20,11 @@ public class JdbcHelper {
     this.jdbcTemplate = jdbcTemplate;
   }
 
-  public Object populate(String tableName, Map<String,Object> valuesProvidedByUser) {
+  public Object populate(String tableName, Map<String, Object> valuesProvidedByUser) {
     Map<String, Object> columnsToPopulate = new HashMap<>();
     try {
       jdbcTemplate.query("desc " + tableName, rch -> {
-        if(rch.getString(NULL).equals("NO")) {
+        if (rch.getString(NULL).equals("NO")) {
           String type = rch.getString(TYPE);
           String key = rch.getString(KEY);
           String defaultValue = rch.getString(DEFAULT);
@@ -56,11 +56,14 @@ public class JdbcHelper {
   }
 
   private Object getValue(String type, String key, String defaultValue) {
-      if(type.startsWith("int")) {
-        return new IntValue(type, key, defaultValue).value();
-      } else if(type.startsWith("varchar")) {
-        return new VarcharValue(type, key, defaultValue).value();
-      }
-      return null;
+    type = type.toLowerCase();
+    if (type.startsWith("int")) {
+      return new IntValue(type, key, defaultValue).value();
+    } else if (type.startsWith("varchar")) {
+      return new VarcharValue(type, key, defaultValue).value();
+    } else if (type.startsWith("datetime")) {
+      return new DatetimeValue(type, key, defaultValue).value();
+    }
+    return null;
   }
 }
