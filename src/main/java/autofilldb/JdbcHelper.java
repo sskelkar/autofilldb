@@ -23,18 +23,17 @@ public class JdbcHelper {
   public Object populate(String tableName, Map<String, Object> valuesProvidedByUser) {
     Map<String, Object> columnsToPopulate = new HashMap<>();
     try {
-      jdbcTemplate.query("desc " + tableName, rch -> {
-        if (rch.getString(NULL).equals("NO")) {
-          String type = rch.getString(TYPE);
-          String key = rch.getString(KEY);
-          String defaultValue = rch.getString(DEFAULT);
-          columnsToPopulate.put(rch.getString(FIELD), getValue(type, key, defaultValue));
+      jdbcTemplate.query("desc " + tableName, column -> {
+        if (column.getString(NULL).equals("NO")) {
+          String type = column.getString(TYPE);
+          String key = column.getString(KEY);
+          String defaultValue = column.getString(DEFAULT);
+          columnsToPopulate.put(column.getString(FIELD), getValue(type, key, defaultValue));
         }
       });
     } catch (Exception e) {
-      throw new RuntimeException(e.getMessage());
+      throw new RuntimeException(e);
     }
-    System.out.println(columnsToPopulate);
 
     valuesProvidedByUser.forEach((key, value) -> columnsToPopulate.put(key, value));
 
