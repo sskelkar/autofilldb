@@ -1,6 +1,9 @@
 package autofilldb;
 
-import org.apache.logging.log4j.util.Strings;
+import autofilldb.datatype.DataTypeHandler;
+import autofilldb.datatype.DatetimeHandler;
+import autofilldb.datatype.IntegerHandler;
+import autofilldb.datatype.VarcharHandler;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.ArrayList;
@@ -8,61 +11,49 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static java.lang.String.format;
+import static org.apache.logging.log4j.util.Strings.join;
+
 public class JdbcHelper {
-  private static final int FIELD = 1;
-  private static final int TYPE = 2;
-  private static final int NULL = 3;
-  private static final int KEY = 4;
-  private static final int DEFAULT = 5;
   private JdbcTemplate jdbcTemplate;
+  private List<DataTypeHandler> dataTypeHandlerHandlers = new ArrayList<>();
 
   public JdbcHelper(JdbcTemplate jdbcTemplate) {
     this.jdbcTemplate = jdbcTemplate;
+    dataTypeHandlerHandlers.add(new IntegerHandler());
+    dataTypeHandlerHandlers.add(new VarcharHandler());
+    dataTypeHandlerHandlers.add(new DatetimeHandler());
   }
 
   public Object populate(String tableName, Map<String, Object> valuesProvidedByUser) {
     Map<String, Object> columnsToPopulate = new HashMap<>();
-    try {
-      jdbcTemplate.query("desc " + tableName, column -> {
-        if (column.getString(NULL).equals("NO")) {
-          String type = column.getString(TYPE);
-          String key = column.getString(KEY);
-          String defaultValue = column.getString(DEFAULT);
-          columnsToPopulate.put(column.getString(FIELD), getValue(type, key, defaultValue));
-        }
-      });
-    } catch (Exception e) {
-      throw new RuntimeException(e);
-    }
 
-    valuesProvidedByUser.forEach((key, value) -> columnsToPopulate.put(key, value));
-
-    String query = String.format("insert into %s (", tableName);
-
-    List<String> columns = new ArrayList<>();
-    List<String> values = new ArrayList<>();
-    columnsToPopulate.forEach((key, value) -> {
-      columns.add(key);
-      values.add(value.toString());
+    jdbcTemplate.query("desc " + tableName, result -> {
+      ColumnDefinition column = new ColumnDefinition(result);
+      if (!column.isNullable()) {
+        columnsToPopulate.put(column.getName(), generateValueFor(column));
+      }
     });
-    query += Strings.join(columns, ',');
-    query += ") values(";
-    query += Strings.join(values, ',');
-    query += ")";
-    System.out.println(query);
-    jdbcTemplate.execute(query);
+
+    valuesProvidedByUser.forEach(columnsToPopulate::put);
+
+    jdbcTemplate.execute(createInsertionQuery(tableName, columnsToPopulate));
     return null;//return primary key value
   }
 
-  private Object getValue(String type, String key, String defaultValue) {
-    type = type.toLowerCase();
-    if (type.startsWith("int")) {
-      return new IntValue(type, key, defaultValue).value();
-    } else if (type.startsWith("varchar")) {
-      return new VarcharValue(type, key, defaultValue).value();
-    } else if (type.startsWith("datetime")) {
-      return new DatetimeValue(type, key, defaultValue).value();
-    }
-    return null;
+  private String createInsertionQuery(String tableName, Map<String, Object> columnsToPopulate) {
+    return format("insert into %s (", tableName)
+        .concat(join(columnsToPopulate.keySet(), ','))
+        .concat(") values(")
+        .concat(join(columnsToPopulate.values(), ','))
+        .concat(")");
+  }
+
+  private Object generateValueFor(ColumnDefinition column) {
+    return dataTypeHandlerHandlers.stream()
+        .filter(dataTypeHandler -> dataTypeHandler.canHandle(column.getDataType()))
+        .findFirst()
+        .map(dataTypeHandler -> dataTypeHandler.value(column))
+        .orElseThrow(() -> new UnsupportedOperationException(column.getDataType() + " not supported yet :("));
   }
 }
