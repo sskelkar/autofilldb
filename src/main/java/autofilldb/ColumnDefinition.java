@@ -4,43 +4,54 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ColumnDefinition {
-    private static final int FIELD = 1;
-    private static final int TYPE = 2;
-    private static final int NULL = 3;
-    private static final int KEY = 4;
-    private static final int DEFAULT = 5;
+  private String dataType;
+  private String constraint;
+  private String defaultValue;
+  private String name;
+  private boolean isNullable;
+  private String foreignKeyTable;
+  private String foreignKeyColumn;
 
-    private String dataType;
-    private String constraint;
-    private String defaultValue;
-    private String name;
-    private boolean isNullable;
+  public ColumnDefinition(ResultSet column) throws SQLException {
+    this.dataType = column.getString("column_type");
+    this.constraint = column.getString("column_constraint");
+    this.defaultValue = column.getString("default_value");
+    this.name = column.getString("column_name");
+    this.foreignKeyTable = column.getString("foreign_table");
+    this.foreignKeyColumn = column.getString("foreign_column");
+    this.isNullable = column.getString("nullable").equals("YES");
 
-    public ColumnDefinition(ResultSet column) throws SQLException {
-        this.dataType = column.getString(TYPE);
-        this.constraint = column.getString(KEY);
-        this.defaultValue = column.getString(DEFAULT);
-        this.name = column.getString(FIELD);
-        this.isNullable = column.getString(NULL).equals("YES");
-    }
+  }
 
-    public String getDataType() {
-        return dataType;
-    }
+  public String getDataType() {
+    return dataType;
+  }
 
-    public String getConstraint() {
-        return constraint;
-    }
+  public String getConstraint() {
+    return constraint;
+  }
 
-    public String getDefaultValue() {
-        return defaultValue;
-    }
+  public String getDefaultValue() {
+    return defaultValue;
+  }
 
-    public String getName() {
-        return name;
-    }
+  public String getName() {
+    return name;
+  }
 
-    public boolean isNullable() {
-        return isNullable;
-    }
+  public boolean isNullable() {
+    return isNullable;
+  }
+
+  public String getForeignKeyTable() {
+    return foreignKeyTable;
+  }
+
+  public String getForeignKeyColumn() {
+    return foreignKeyColumn;
+  }
+
+  public boolean hasForeignKeyConstraint() {
+    return foreignKeyTable != null;
+  }
 }
