@@ -18,25 +18,20 @@ public class DatetimeHandler implements DataTypeHandler<String> {
   }
 
   @Override
-  public String value(ColumnDefinition def) {
-
-    String value = isConstraintPresent(def.getConstraint()) ?
-        generateValue() :
-        fillerValue(def.getDefaultValue());
-
-    return "'" + value + "'";
-  }
-
-  private String generateValue() {
+  public String uniqueValue(ColumnDefinition def) {
     int offset = new Random().nextInt();
-    return REFERENCE_DATE.plusSeconds(offset).format(FORMATTER);
+    String value = REFERENCE_DATE.plusSeconds(offset).format(FORMATTER);
+
+    return enQuote(value);
   }
 
-  private String fillerValue(String defaultValue) {
-    return isNullOrEmpty(defaultValue) ? "2001-01-19 03:14:07" : defaultValue;
+  @Override
+  public String value(String defaultValue) {
+    String value = isNullOrEmpty(defaultValue) ? "2001-01-19 03:14:07" : defaultValue;
+    return enQuote(value);
   }
 
-  private boolean isConstraintPresent(String constraint) {
-    return !isNullOrEmpty(constraint) && (constraint.equals("PRI") || constraint.equals("UNI"));
+  private String enQuote(String value) {
+    return "'" + value + "'";
   }
 }

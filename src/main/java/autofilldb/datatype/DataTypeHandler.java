@@ -6,5 +6,7 @@ public interface DataTypeHandler<T> {
 
   boolean canHandle(String dataType);
 
-  T value(ColumnDefinition columnDefinition);
+  T uniqueValue(ColumnDefinition columnDefinition);
+
+  T value(String defaultValue);
 }

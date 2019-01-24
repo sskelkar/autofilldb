@@ -31,12 +31,17 @@ public class JdbcHelper {
 
     getColumnDefinitions(tableName).forEach(column -> {
       if (!column.isNullable()) {
+        Object value;
         if (column.hasForeignKeyConstraint()) {
           Map<String, Object> valuesInReferencedForeignTable = populate(column.getForeignKeyTable(), emptyMap());
-          columnsToPopulate.put(column.getName(), valuesInReferencedForeignTable.get(column.getForeignKeyColumn()));
+          value = valuesInReferencedForeignTable.get(column.getForeignKeyColumn());
+        } else if (column.hasUniqueOrPrimaryConstraint()) {
+          value = getHandlerFor(column.getDataType()).uniqueValue(column);
         } else {
-          columnsToPopulate.put(column.getName(), generateValueFor(column));
+          value = getHandlerFor(column.getDataType()).value(column.getDefaultValue());
         }
+
+        columnsToPopulate.put(column.getName(), value);
       }
     });
 
@@ -54,12 +59,11 @@ public class JdbcHelper {
       .concat(")");
   }
 
-  private Object generateValueFor(ColumnDefinition column) {
+  private DataTypeHandler getHandlerFor(String dataType) {
     return dataTypeHandlerHandlers.stream()
-      .filter(dataTypeHandler -> dataTypeHandler.canHandle(column.getDataType()))
+      .filter(dataTypeHandler -> dataTypeHandler.canHandle(dataType))
       .findFirst()
-      .map(dataTypeHandler -> dataTypeHandler.value(column))
-      .orElseThrow(() -> new UnsupportedOperationException(column.getDataType() + " not supported yet :("));
+      .orElseThrow(() -> new UnsupportedOperationException(dataType + " is not supported yet :("));
   }
 
   private List<ColumnDefinition> getColumnDefinitions(String tableName) {

@@ -15,22 +15,12 @@ public class IntegerHandler implements DataTypeHandler<Integer> {
   }
 
   @Override
-  public Integer value(ColumnDefinition def) {
-
-    return isConstraintPresent(def.getConstraint()) ?
-        generateValue() :
-        fillerValue(def.getDefaultValue());
+  public Integer uniqueValue(ColumnDefinition def) {
+    return new Random().nextInt();
   }
 
-  private Integer generateValue() {
-      return new Random().nextInt();
-  }
-
-  private int fillerValue(String defaultValue) {
+  @Override
+  public Integer value(String defaultValue) {
     return isNullOrEmpty(defaultValue) ? 1 : parseInt(defaultValue);
-  }
-
-  private boolean isConstraintPresent(String constraint) {
-    return !isNullOrEmpty(constraint) && (constraint.equals("PRI") || constraint.equals("UNI"));
   }
 }

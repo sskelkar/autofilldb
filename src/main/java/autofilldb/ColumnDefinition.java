@@ -3,6 +3,8 @@ package autofilldb;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import static autofilldb.Util.isNullOrEmpty;
+
 public class ColumnDefinition {
   private String dataType;
   private String constraint;
@@ -27,10 +29,6 @@ public class ColumnDefinition {
     return dataType;
   }
 
-  public String getConstraint() {
-    return constraint;
-  }
-
   public String getDefaultValue() {
     return defaultValue;
   }
@@ -53,5 +51,9 @@ public class ColumnDefinition {
 
   public boolean hasForeignKeyConstraint() {
     return foreignKeyTable != null;
+  }
+
+  public boolean hasUniqueOrPrimaryConstraint() {
+    return !isNullOrEmpty(constraint) && (constraint.equals("PRI") || constraint.equals("UNI"));
   }
 }

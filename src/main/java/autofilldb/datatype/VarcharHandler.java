@@ -16,24 +16,20 @@ public class VarcharHandler implements DataTypeHandler<String> {
   }
 
   @Override
-  public String value(ColumnDefinition def) {
-    String value = isConstraintPresent(def.getConstraint()) ?
-        generateValue(def) :
-        fillerValue(def.getDefaultValue());
-    return "'" + value + "'";
-  }
-
-  private String generateValue(ColumnDefinition def) {
+  public String uniqueValue(ColumnDefinition def) {
     String randomString = randomUUID().toString();
     int columnSize = parseInt(def.getDataType().replace("varchar(", "").replace(")", ""));
-    return randomString.length() > columnSize ? randomString.substring(0, columnSize) : randomString;
+    String value = randomString.length() > columnSize ? randomString.substring(0, columnSize) : randomString;
+    return enQuote(value);
   }
 
-  private String fillerValue(String defaultValue) {
-    return isNullOrEmpty(defaultValue) ? "a" : defaultValue;
+  @Override
+  public String value(String defaultValue) {
+    String value = isNullOrEmpty(defaultValue) ? "a" : defaultValue;
+    return enQuote(value);
   }
 
-  private boolean isConstraintPresent(String constraint) {
-    return !isNullOrEmpty(constraint) && (constraint.equals("PRI") || constraint.equals("UNI"));
+  private String enQuote(String value) {
+    return "'" + value + "'";
   }
 }
