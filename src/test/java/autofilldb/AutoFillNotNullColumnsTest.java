@@ -1,6 +1,5 @@
-package testdatasetup;
+package autofilldb;
 
-import autofilldb.Insert;
 import org.junit.Test;
 
 public class AutoFillNotNullColumnsTest extends DBTest {

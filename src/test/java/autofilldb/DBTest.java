@@ -1,4 +1,4 @@
-package testdatasetup;
+package autofilldb;
 
 import org.junit.Before;
 import org.junit.runner.RunWith;

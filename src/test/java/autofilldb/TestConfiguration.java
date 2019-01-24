@@ -1,4 +1,4 @@
-package testdatasetup;
+package autofilldb;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -10,7 +10,7 @@ import org.testcontainers.containers.MySQLContainer;
 import javax.sql.DataSource;
 
 @Configuration
-@ComponentScan("testdatasetup")
+@ComponentScan("autofilldb")
 public class TestConfiguration {
   @Bean
   public DataSource dataSource() {

@@ -1,11 +1,10 @@
-package testdatasetup;
+package autofilldb;
 
-import autofilldb.Insert;
 import org.junit.Test;
 
 public class AutoFillForeignKeyColumnsTest extends DBTest {
 
-  @Test( /* no exception expected */)
+  @Test(/* no exception expected */)
   public void shouldAutomaticallyCreateReferencedForeignTableRow() {
     //when
     jdbcTemplate.execute(
