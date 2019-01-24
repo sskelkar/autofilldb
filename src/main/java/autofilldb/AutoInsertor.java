@@ -15,11 +15,11 @@ import static java.lang.String.format;
 import static java.util.Collections.emptyMap;
 import static org.apache.logging.log4j.util.Strings.join;
 
-public class JdbcHelper {
+public class AutoInsertor {
   private JdbcTemplate jdbcTemplate;
   private List<DataTypeHandler> dataTypeHandlerHandlers = new ArrayList<>();
 
-  public JdbcHelper(JdbcTemplate jdbcTemplate) {
+  public AutoInsertor(JdbcTemplate jdbcTemplate) {
     this.jdbcTemplate = jdbcTemplate;
     dataTypeHandlerHandlers.add(new IntegerHandler());
     dataTypeHandlerHandlers.add(new VarcharHandler());

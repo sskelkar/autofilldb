@@ -20,8 +20,8 @@ public class AutoFillForeignKeyColumnsTest extends DBTest {
         "  primary key(id)," +
         "  foreign key(organisation_id) references organisation(id))");
 
-    new Insert(jdbcTemplate).into("department").value("id", 10).go();
-    new Insert(jdbcTemplate).into("department").value("id", 20).go();
+    new Insert(jdbcTemplate.getDataSource()).into("department").value("id", 10).go();
+    new Insert(jdbcTemplate.getDataSource()).into("department").value("id", 20).go();
   }
 
   @Test( /* no exception expected */)
@@ -49,6 +49,6 @@ public class AutoFillForeignKeyColumnsTest extends DBTest {
         "  foreign key(department_id) references department(id))");
 
     //then
-    new Insert(jdbcTemplate).into("employee").go();
+    new Insert(jdbcTemplate.getDataSource()).into("employee").go();
   }
 }

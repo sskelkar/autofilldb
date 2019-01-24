@@ -14,8 +14,8 @@ public class AutoFillNotNullColumnsTest extends DBTest {
         "  digit_limit_column integer(4) not null," +
         "  unique_value_column integer not null unique)");
 
-    new Insert(jdbcTemplate).into("type_int").value("id", 10).go();
-    new Insert(jdbcTemplate).into("type_int").value("id", 20).go();
+    new Insert(jdbcTemplate.getDataSource()).into("type_int").value("id", 10).go();
+    new Insert(jdbcTemplate.getDataSource()).into("type_int").value("id", 20).go();
   }
 
   @Test( /* no exception expected */)
@@ -29,8 +29,8 @@ public class AutoFillNotNullColumnsTest extends DBTest {
         "  unique_value_column varchar(4) not null unique)");
 
     //then
-    new Insert(jdbcTemplate).into("type_varchar").value("id", 10).go();
-    new Insert(jdbcTemplate).into("type_varchar").value("id", 20).go();
+    new Insert(jdbcTemplate.getDataSource()).into("type_varchar").value("id", 10).go();
+    new Insert(jdbcTemplate.getDataSource()).into("type_varchar").value("id", 20).go();
   }
 
   @Test( /* no exception expected */)
@@ -43,7 +43,7 @@ public class AutoFillNotNullColumnsTest extends DBTest {
         "  unique_value_column datetime not null unique)");
 
     //then
-    new Insert(jdbcTemplate).into("type_datetime").value("id", 10).go();
-    new Insert(jdbcTemplate).into("type_datetime").value("id", 20).go();
+    new Insert(jdbcTemplate.getDataSource()).into("type_datetime").value("id", 10).go();
+    new Insert(jdbcTemplate.getDataSource()).into("type_datetime").value("id", 20).go();
   }
 }
