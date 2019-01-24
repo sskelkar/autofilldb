@@ -31,17 +31,7 @@ public class JdbcHelper {
 
     getColumnDefinitions(tableName).forEach(column -> {
       if (!column.isNullable()) {
-        Object value;
-        if (column.hasForeignKeyConstraint()) {
-          Map<String, Object> valuesInReferencedForeignTable = populate(column.getForeignKeyTable(), emptyMap());
-          value = valuesInReferencedForeignTable.get(column.getForeignKeyColumn());
-        } else if (column.hasUniqueOrPrimaryConstraint()) {
-          value = getHandlerFor(column.getDataType()).uniqueValue(column);
-        } else {
-          value = getHandlerFor(column.getDataType()).value(column.getDefaultValue());
-        }
-
-        columnsToPopulate.put(column.getName(), value);
+        columnsToPopulate.put(column.getName(), getValueFor(column));
       }
     });
 
@@ -49,6 +39,24 @@ public class JdbcHelper {
 
     jdbcTemplate.execute(createInsertionQuery(tableName, columnsToPopulate));
     return columnsToPopulate;
+  }
+
+  private Object getValueFor(ColumnDefinition column) {
+    Object value;
+
+    if (column.hasForeignKeyConstraint()) {
+      value = getValueForForeignKeyConstraint(column);
+    } else if (column.hasUniqueOrPrimaryConstraint()) {
+      value = handlerFor(column.getDataType()).uniqueValue(column);
+    } else {
+      value = handlerFor(column.getDataType()).value(column.getDefaultValue());
+    }
+    return value;
+  }
+
+  private Object getValueForForeignKeyConstraint(ColumnDefinition column) {
+    Map<String, Object> valuesInReferencedForeignTable = populate(column.getForeignKeyTable(), emptyMap());
+    return valuesInReferencedForeignTable.get(column.getForeignKeyColumn());
   }
 
   private String createInsertionQuery(String tableName, Map<String, Object> columnsToPopulate) {
@@ -59,7 +67,7 @@ public class JdbcHelper {
       .concat(")");
   }
 
-  private DataTypeHandler getHandlerFor(String dataType) {
+  private DataTypeHandler handlerFor(String dataType) {
     return dataTypeHandlerHandlers.stream()
       .filter(dataTypeHandler -> dataTypeHandler.canHandle(dataType))
       .findFirst()
