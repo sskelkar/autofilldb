@@ -13,7 +13,7 @@ import javax.sql.DataSource;
 @ContextConfiguration(classes = TestConfiguration.class)
 public abstract class DBTest extends AbstractTransactionalJUnit4SpringContextTests {
   @Autowired
-  private DataSource dataSource;
+  protected Insert insert;
 
   protected void runSql(String sql) {
     jdbcTemplate.execute(sql);

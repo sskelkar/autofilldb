@@ -2,6 +2,8 @@ package autofilldb;
 
 import org.junit.Test;
 
+import static org.testcontainers.shaded.com.google.common.collect.ImmutableMap.of;
+
 public class AutoFillForeignKeyColumnsTest extends DBTest {
 
   @Test(/* no exception expected */)
@@ -20,8 +22,8 @@ public class AutoFillForeignKeyColumnsTest extends DBTest {
         "  primary key(id)," +
         "  foreign key(organisation_id) references organisation(id))");
 
-    new Insert(jdbcTemplate.getDataSource()).into("department").value("id", 10).go();
-    new Insert(jdbcTemplate.getDataSource()).into("department").value("id", 20).go();
+    insert.go("department", of("id", 10));
+    insert.go("department", of("id", 20));
   }
 
   @Test( /* no exception expected */)
@@ -49,6 +51,6 @@ public class AutoFillForeignKeyColumnsTest extends DBTest {
         "  foreign key(department_id) references department(id))");
 
     //then
-    new Insert(jdbcTemplate.getDataSource()).into("employee").go();
+    insert.go("employee");
   }
 }

@@ -25,4 +25,12 @@ public class TestConfiguration {
     return new HikariDataSource(hikariConfig);
   }
 
+//  @Bean
+//  public PlatformTransactionManager transactionManager(DataSource dataSource) {
+//    final DataSourceTransactionManager txManager = new DataSourceTransactionManager();
+//    txManager.setDataSource(dataSource);
+//
+//    return txManager;
+//  }
+
 }
