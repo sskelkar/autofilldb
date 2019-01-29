@@ -10,6 +10,18 @@ buildscript {
 	}
 }
 
+plugins {
+    id 'jacoco'
+    id 'com.github.kt3k.coveralls' version '2.8.2'
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled = true // coveralls plugin depends on xml format report
+        html.enabled = true
+    }
+}
+
 apply plugin: 'java'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
