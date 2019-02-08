@@ -5,6 +5,8 @@ import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
 import org.testcontainers.containers.MySQLContainer;
 
 import javax.sql.DataSource;
@@ -25,12 +27,12 @@ public class TestConfiguration {
     return new HikariDataSource(hikariConfig);
   }
 
-//  @Bean
-//  public PlatformTransactionManager transactionManager(DataSource dataSource) {
-//    final DataSourceTransactionManager txManager = new DataSourceTransactionManager();
-//    txManager.setDataSource(dataSource);
-//
-//    return txManager;
-//  }
+  @Bean
+  public PlatformTransactionManager transactionManager(DataSource dataSource) {
+    final DataSourceTransactionManager txManager = new DataSourceTransactionManager();
+    txManager.setDataSource(dataSource);
+
+    return txManager;
+  }
 
 }
