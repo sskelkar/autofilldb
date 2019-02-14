@@ -1,8 +1,6 @@
-package autofilldb.datatype;
+package autofilldb;
 
-import autofilldb.ColumnDefinition;
-
-public interface DataTypeHandler<T> {
+interface DataTypeHandler<T> {
 
   boolean canHandle(String dataType);
 

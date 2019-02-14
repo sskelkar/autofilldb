@@ -1,13 +1,11 @@
-package autofilldb.datatype;
-
-import autofilldb.ColumnDefinition;
+package autofilldb;
 
 import java.util.Random;
 
 import static autofilldb.Util.isNullOrEmpty;
 import static java.lang.Integer.parseInt;
 
-public final class IntegerHandler implements DataTypeHandler<Integer> {
+final class IntegerHandler implements DataTypeHandler<Integer> {
 
   @Override
   public boolean canHandle(String dataType) {

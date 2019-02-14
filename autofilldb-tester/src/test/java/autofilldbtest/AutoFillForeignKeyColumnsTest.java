@@ -1,4 +1,4 @@
-package autofilldb;
+package autofilldbtest;
 
 import org.junit.Test;
 

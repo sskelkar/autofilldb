@@ -1,9 +1,5 @@
 package autofilldb;
 
-import autofilldb.datatype.DataTypeHandler;
-import autofilldb.datatype.DatetimeHandler;
-import autofilldb.datatype.IntegerHandler;
-import autofilldb.datatype.VarcharHandler;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.ArrayList;

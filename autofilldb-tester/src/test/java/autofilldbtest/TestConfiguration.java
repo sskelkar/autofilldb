@@ -1,4 +1,4 @@
-package autofilldb;
+package autofilldbtest;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -16,7 +16,7 @@ import javax.sql.DataSource;
 public class TestConfiguration {
   @Bean
   public DataSource dataSource() {
-    MySQLContainer mysql = new MySQLContainer("mysql:5.6.42").withDatabaseName("test");
+    MySQLContainer mysql = new MySQLContainer("mysql:5.6.42").withDatabaseName("autofilldbtest");
     mysql.start();
     HikariConfig hikariConfig = new HikariConfig();
     hikariConfig.setDriverClassName(mysql.getDriverClassName());
