@@ -58,4 +58,4 @@ autoFill.into("employee", ImmutableMap.of("id", 3002, "email", "jane@example.com
 You'd need to inject `AutoFill` bean into your test class. The above method takes in the table name and a Map of column name and value pairs that are relevant to the unit test.
 
 ## Authors
-[sskelkar](https://github.com/sskelkar), [shreyasm](https://github.com/shreyasm)
+[sskelkar](https://github.com/sskelkar), [shreyasm](https://github.com/shreyasm), [rishikeshdhokare](https://github.com/rishikeshdhokare)
