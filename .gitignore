@@ -2,6 +2,7 @@
 /build/
 !gradle/wrapper/gradle-wrapper.jar
 
+autofilldb/gradle.properties
 ### STS ###
 .apt_generated
 .classpath

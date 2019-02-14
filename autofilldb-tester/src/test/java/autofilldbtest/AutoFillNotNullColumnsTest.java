@@ -1,27 +1,29 @@
-package autofilldb;
+package autofilldbtest;
 
+import autofilldbtest.setup.DBTest;
 import org.junit.Test;
 
-public class AutoFillNotNullColumnsTest extends DBTest {
+import static org.testcontainers.shaded.com.google.common.collect.ImmutableMap.of;
 
+public class AutoFillNotNullColumnsTest extends DBTest {
   @Test( /* no exception expected */)
   public void shouldPopulateIntTypeColumnsWithinConstraints() {
     //when
-    jdbcTemplate.execute(
+    runSql(
       "create table type_int(" +
         "  id integer," +
         "  not_null_column integer not null," +
         "  digit_limit_column integer(4) not null," +
         "  unique_value_column integer not null unique)");
 
-    new Insert(jdbcTemplate.getDataSource()).into("type_int").value("id", 10).go();
-    new Insert(jdbcTemplate.getDataSource()).into("type_int").value("id", 20).go();
+    autoFill.into("type_int", of("id", 10));
+    autoFill.into("type_int", of("id", 20));
   }
 
   @Test( /* no exception expected */)
   public void shouldPopulateVarcharTypeColumnsWithinConstraints() {
     //when
-    jdbcTemplate.execute(
+    runSql(
       "create table type_varchar(" +
         "  id integer," +
         "  not_null_column_1 varchar(10) not null," +
@@ -29,21 +31,21 @@ public class AutoFillNotNullColumnsTest extends DBTest {
         "  unique_value_column varchar(4) not null unique)");
 
     //then
-    new Insert(jdbcTemplate.getDataSource()).into("type_varchar").value("id", 10).go();
-    new Insert(jdbcTemplate.getDataSource()).into("type_varchar").value("id", 20).go();
+    autoFill.into("type_varchar", of("id", 10));
+    autoFill.into("type_varchar", of("id", 20));
   }
 
   @Test( /* no exception expected */)
   public void shouldPopulateDatetimeTypeColumnsWithinConstraints() {
     //when
-    jdbcTemplate.execute(
+    runSql(
       "create table type_datetime(" +
         "  id integer," +
         "  not_null_column datetime not null," +
         "  unique_value_column datetime not null unique)");
 
     //then
-    new Insert(jdbcTemplate.getDataSource()).into("type_datetime").value("id", 10).go();
-    new Insert(jdbcTemplate.getDataSource()).into("type_datetime").value("id", 20).go();
+    autoFill.into("type_datetime", of("id", 10));
+    autoFill.into("type_datetime", of("id", 20));
   }
 }

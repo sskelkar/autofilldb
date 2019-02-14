@@ -1,14 +1,10 @@
-package autofilldb.datatype;
+package com.github.sskelkar.autofilldb;
 
-import autofilldb.ColumnDefinition;
-
-import java.util.Random;
-
-import static autofilldb.Util.isNullOrEmpty;
+import static com.github.sskelkar.autofilldb.Util.isNullOrEmpty;
 import static java.lang.Integer.parseInt;
 import static java.util.UUID.randomUUID;
 
-public class VarcharHandler implements DataTypeHandler<String> {
+final class VarcharHandler implements DataTypeHandler<String> {
 
   @Override
   public boolean canHandle(String dataType) {

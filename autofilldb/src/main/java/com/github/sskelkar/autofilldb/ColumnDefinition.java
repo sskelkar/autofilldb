@@ -1,11 +1,11 @@
-package autofilldb;
+package com.github.sskelkar.autofilldb;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static autofilldb.Util.isNullOrEmpty;
+import static com.github.sskelkar.autofilldb.Util.isNullOrEmpty;
 
-public class ColumnDefinition {
+final class ColumnDefinition {
   private String dataType;
   private String constraint;
   private String defaultValue;
@@ -14,7 +14,7 @@ public class ColumnDefinition {
   private String foreignKeyTable;
   private String foreignKeyColumn;
 
-  public ColumnDefinition(ResultSet column) throws SQLException {
+  ColumnDefinition(ResultSet column) throws SQLException {
     this.dataType = column.getString("column_type");
     this.constraint = column.getString("column_constraint");
     this.defaultValue = column.getString("default_value");
@@ -25,35 +25,35 @@ public class ColumnDefinition {
 
   }
 
-  public String getDataType() {
+  String getDataType() {
     return dataType;
   }
 
-  public String getDefaultValue() {
+  String getDefaultValue() {
     return defaultValue;
   }
 
-  public String getName() {
+  String getName() {
     return name;
   }
 
-  public boolean isNullable() {
+  boolean isNullable() {
     return isNullable;
   }
 
-  public String getForeignKeyTable() {
+  String getForeignKeyTable() {
     return foreignKeyTable;
   }
 
-  public String getForeignKeyColumn() {
+  String getForeignKeyColumn() {
     return foreignKeyColumn;
   }
 
-  public boolean hasForeignKeyConstraint() {
+  boolean hasForeignKeyConstraint() {
     return foreignKeyTable != null;
   }
 
-  public boolean hasUniqueOrPrimaryConstraint() {
+  boolean hasUniqueOrPrimaryConstraint() {
     return !isNullOrEmpty(constraint) && (constraint.equals("PRI") || constraint.equals("UNI"));
   }
 }

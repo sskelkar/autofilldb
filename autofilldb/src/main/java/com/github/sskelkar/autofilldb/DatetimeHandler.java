@@ -1,14 +1,12 @@
-package autofilldb.datatype;
-
-import autofilldb.ColumnDefinition;
+package com.github.sskelkar.autofilldb;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
 
-import static autofilldb.Util.isNullOrEmpty;
+import static com.github.sskelkar.autofilldb.Util.isNullOrEmpty;
 
-public class DatetimeHandler implements DataTypeHandler<String> {
+final class DatetimeHandler implements DataTypeHandler<String> {
   private static final LocalDateTime REFERENCE_DATE = LocalDateTime.of(2000, 1, 1, 0, 0, 0);
   private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 

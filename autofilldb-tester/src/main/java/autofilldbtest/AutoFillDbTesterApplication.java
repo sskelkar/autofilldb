@@ -1,12 +1,12 @@
-package autofilldb;
+package autofilldbtest;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class AutoFillDbApplication {
+public class AutoFillDbTesterApplication {
 
   public static void main(String[] args) {
-    SpringApplication.run(AutoFillDbApplication.class, args);
+    SpringApplication.run(AutoFillDbTesterApplication.class, args);
   }
 }
