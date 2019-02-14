@@ -1,4 +1,4 @@
 rootProject.name = 'autofilldb-app'
 
-include 'autofilldb-library'
-include 'application'
+include 'autofilldb'
+include 'autofilldb-tester'
