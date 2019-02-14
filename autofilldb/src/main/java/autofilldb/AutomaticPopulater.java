@@ -11,11 +11,11 @@ import static java.lang.String.format;
 import static java.util.Collections.emptyMap;
 import static org.apache.logging.log4j.util.Strings.join;
 
-class AutoInsertor {
+class AutomaticPopulater {
   private JdbcTemplate jdbcTemplate;
   private List<DataTypeHandler> dataTypeHandlerHandlers = new ArrayList<>();
 
-  AutoInsertor(JdbcTemplate jdbcTemplate) {
+  AutomaticPopulater(JdbcTemplate jdbcTemplate) {
     this.jdbcTemplate = jdbcTemplate;
     dataTypeHandlerHandlers.add(new IntegerHandler());
     dataTypeHandlerHandlers.add(new VarcharHandler());
@@ -71,7 +71,8 @@ class AutoInsertor {
   }
 
   private List<ColumnDefinition> getColumnDefinitions(String tableName) {
-    String query = String.format("select c.column_name, c.column_type,  c.is_nullable as nullable, c.column_key as column_constraint, c.column_default as default_value, kcu.referenced_table_name as foreign_table, kcu.referenced_column_name as foreign_column\n" +
+    String query = String.format(
+      "select c.column_name, c.column_type,  c.is_nullable as nullable, c.column_key as column_constraint, c.column_default as default_value, kcu.referenced_table_name as foreign_table, kcu.referenced_column_name as foreign_column\n" +
       "from information_schema.columns  c\n" +
       "left join information_schema.key_column_usage kcu on (kcu.column_name = c.column_name and kcu.table_schema=c.table_schema and kcu.table_name=c.table_name)\n" +
       "where c.table_schema=(select database() from dual) and c.table_name='%s'", tableName);
