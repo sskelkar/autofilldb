@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 import static autofilldb.Util.isNullOrEmpty;
 
-public class ColumnDefinition {
+final public class ColumnDefinition {
   private String dataType;
   private String constraint;
   private String defaultValue;

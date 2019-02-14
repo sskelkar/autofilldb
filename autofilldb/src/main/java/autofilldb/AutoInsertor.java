@@ -15,18 +15,18 @@ import static java.lang.String.format;
 import static java.util.Collections.emptyMap;
 import static org.apache.logging.log4j.util.Strings.join;
 
-public class AutoInsertor {
+class AutoInsertor {
   private JdbcTemplate jdbcTemplate;
   private List<DataTypeHandler> dataTypeHandlerHandlers = new ArrayList<>();
 
-  public AutoInsertor(JdbcTemplate jdbcTemplate) {
+  AutoInsertor(JdbcTemplate jdbcTemplate) {
     this.jdbcTemplate = jdbcTemplate;
     dataTypeHandlerHandlers.add(new IntegerHandler());
     dataTypeHandlerHandlers.add(new VarcharHandler());
     dataTypeHandlerHandlers.add(new DatetimeHandler());
   }
 
-  public Map<String, Object> populate(String tableName, Map<String, Object> valuesProvidedByUser) {
+  Map<String, Object> populate(String tableName, Map<String, Object> valuesProvidedByUser) {
     Map<String, Object> columnsToPopulate = new HashMap<>();
 
     getColumnDefinitions(tableName).forEach(column -> {

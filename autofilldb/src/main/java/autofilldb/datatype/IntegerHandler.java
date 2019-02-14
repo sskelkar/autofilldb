@@ -7,7 +7,7 @@ import java.util.Random;
 import static autofilldb.Util.isNullOrEmpty;
 import static java.lang.Integer.parseInt;
 
-public class IntegerHandler implements DataTypeHandler<Integer> {
+public final class IntegerHandler implements DataTypeHandler<Integer> {
 
   @Override
   public boolean canHandle(String dataType) {
