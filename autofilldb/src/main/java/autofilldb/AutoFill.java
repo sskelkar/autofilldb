@@ -9,17 +9,20 @@ import java.util.Map;
 
 import static java.util.Collections.emptyMap;
 
+/**
+ *
+ */
 @Component
-public final class Insert {
+public final class AutoFill {
 
   @Autowired
   private DataSource dataSource;
 
-  public Map<String, Object> go(String tableName, Map<String, Object> columnValues) {
+  public Map<String, Object> into(String tableName, Map<String, Object> columnValues) {
     return new AutoInsertor(new JdbcTemplate(dataSource)).populate(tableName, columnValues);
   }
 
-  public Map<String, Object> go(String tableName) {
-    return go(tableName, emptyMap());
+  public Map<String, Object> into(String tableName) {
+    return into(tableName, emptyMap());
   }
 }

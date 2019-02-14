@@ -1,5 +1,6 @@
 package autofilldbtest;
 
+import autofilldbtest.setup.DBTest;
 import org.junit.Test;
 
 import static org.testcontainers.shaded.com.google.common.collect.ImmutableMap.of;
@@ -9,33 +10,33 @@ public class AutoFillForeignKeyColumnsTest extends DBTest {
   @Test(/* no exception expected */)
   public void shouldAutomaticallyCreateReferencedForeignTableRow() {
     //when
-    jdbcTemplate.execute(
+    runSql(
       "create table organisation(" +
         "  id integer," +
         "  country_code varchar(2) not null," +
         "  primary key(id))");
 
-    jdbcTemplate.execute(
+    runSql(
       "create table department(" +
         "  id integer," +
         "  organisation_id integer not null," +
         "  primary key(id)," +
         "  foreign key(organisation_id) references organisation(id))");
 
-    insert.go("department", of("id", 10));
-    insert.go("department", of("id", 20));
+    autoFill.into("department", of("id", 10));
+    autoFill.into("department", of("id", 20));
   }
 
   @Test( /* no exception expected */)
   public void shouldAutomaticallyCreateReferencedForeignTableRowInHierarchy() {
     //when
-    jdbcTemplate.execute(
+    runSql(
       "create table organisation(" +
         "  id integer," +
         "  country_code varchar(2) not null," +
         "  primary key(id))");
 
-    jdbcTemplate.execute(
+    runSql(
       "create table department(" +
         "  id varchar(36)," +
         "  organisation_id integer not null," +
@@ -43,7 +44,7 @@ public class AutoFillForeignKeyColumnsTest extends DBTest {
         "  foreign key(organisation_id) references organisation(id))");
 
 
-    jdbcTemplate.execute(
+    runSql(
       "create table employee(" +
         "  id integer," +
         "  department_id varchar(36) not null," +
@@ -51,6 +52,6 @@ public class AutoFillForeignKeyColumnsTest extends DBTest {
         "  foreign key(department_id) references department(id))");
 
     //then
-    insert.go("employee");
+    autoFill.into("employee");
   }
 }
