@@ -1,4 +1,4 @@
-package autofilldb;
+package com.github.sskelkar.autofilldb;
 
 final class Util {
     public static boolean isNullOrEmpty(String key) {

@@ -1,6 +1,6 @@
 package autofilldbtest.setup;
 
-import autofilldb.AutoFill;
+import com.github.sskelkar.autofilldb.AutoFill;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

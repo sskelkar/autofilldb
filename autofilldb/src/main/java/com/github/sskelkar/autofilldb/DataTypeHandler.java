@@ -1,4 +1,4 @@
-package autofilldb;
+package com.github.sskelkar.autofilldb;
 
 interface DataTypeHandler<T> {
 

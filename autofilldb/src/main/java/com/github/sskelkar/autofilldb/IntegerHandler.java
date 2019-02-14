@@ -1,8 +1,8 @@
-package autofilldb;
+package com.github.sskelkar.autofilldb;
 
 import java.util.Random;
 
-import static autofilldb.Util.isNullOrEmpty;
+import static com.github.sskelkar.autofilldb.Util.isNullOrEmpty;
 import static java.lang.Integer.parseInt;
 
 final class IntegerHandler implements DataTypeHandler<Integer> {

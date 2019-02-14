@@ -1,6 +1,6 @@
-package autofilldb;
+package com.github.sskelkar.autofilldb;
 
-import static autofilldb.Util.isNullOrEmpty;
+import static com.github.sskelkar.autofilldb.Util.isNullOrEmpty;
 import static java.lang.Integer.parseInt;
 import static java.util.UUID.randomUUID;
 

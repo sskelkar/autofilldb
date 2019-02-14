@@ -1,9 +1,9 @@
-package autofilldb;
+package com.github.sskelkar.autofilldb;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static autofilldb.Util.isNullOrEmpty;
+import static com.github.sskelkar.autofilldb.Util.isNullOrEmpty;
 
 final class ColumnDefinition {
   private String dataType;

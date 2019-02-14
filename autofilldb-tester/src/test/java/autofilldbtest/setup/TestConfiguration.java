@@ -12,7 +12,7 @@ import org.testcontainers.containers.MySQLContainer;
 import javax.sql.DataSource;
 
 @Configuration
-@ComponentScan("autofilldb")
+@ComponentScan("com.github.sskelkar.autofilldb")
 public class TestConfiguration {
   @Bean
   public DataSource dataSource() {

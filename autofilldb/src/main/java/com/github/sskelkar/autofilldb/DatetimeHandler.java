@@ -1,10 +1,10 @@
-package autofilldb;
+package com.github.sskelkar.autofilldb;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
 
-import static autofilldb.Util.isNullOrEmpty;
+import static com.github.sskelkar.autofilldb.Util.isNullOrEmpty;
 
 final class DatetimeHandler implements DataTypeHandler<String> {
   private static final LocalDateTime REFERENCE_DATE = LocalDateTime.of(2000, 1, 1, 0, 0, 0);
