@@ -57,5 +57,13 @@ autoFill.into("employee", ImmutableMap.of("id", 3002, "email", "jane@example.com
 ```
 You'd need to inject `AutoFill` bean into your test class. The above method takes in the table name and a Map of column name and value pairs that are relevant to the unit test.
 
+## Project
+##### Pre-requisite: Docker 1.6.0 or above
+The project has two modules: 
+
+1. `autofilldb` is the actual library
+2. `autofilldb-tester` tests the library against a MySQL instance running in a Docker container.
+
+Command to build the project: `./gradlew clean build -x signArchives`
 ## Authors
 [sskelkar](https://github.com/sskelkar), [shreyasm](https://github.com/shreyasm), [rishikeshdhokare](https://github.com/rishikeshdhokare)
