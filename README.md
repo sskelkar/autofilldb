@@ -57,7 +57,7 @@ autoFill.into("employee", ImmutableMap.of("id", 3002, "email", "jane@example.com
 ```
 You'd need to inject `AutoFill` bean into your test class. The above method takes in the table name and a Map of column name and value pairs that are relevant to the unit test.
 
-## Project
+## Contribution guide
 ##### Pre-requisite: Docker 1.6.0 or above
 The project has two modules: 
 
