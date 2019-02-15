@@ -3,7 +3,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/sskelkar/autofilldb/blob/master/license)
 
 # autofilldb
-`autofilldb` simplies setting up test data in database integration tests in a Spring project. While writing a unit test, you may need to insert some table rows as part of the data setup. If a column has a `not null` constraint, you need to specify some value for it even if that column is not important to your test case. Similarly if a column has a `foreign key` constraint, you first need to insert a row in the referenced table so that you can provide a valid value in the foreign key column. You are required to do this even if the foreign key column or the referenced table are irrelavent to the business rule you're trying to test. This may unnecessarily bloat up the unit test.
+`autofilldb` simplifies setting up test data in database integration tests in a Spring project. While writing a unit test, you may need to insert some table rows as part of the data setup. If a column has a `not null` constraint, you need to specify some value for it even if that column is not important to your test case. Similarly if a column has a `foreign key` constraint, you first need to insert a row in the referenced table so that you can provide a valid value in the foreign key column. You are required to do this even if the foreign key column or the referenced table are irrelavent to the business rule you're trying to test. This may unnecessarily bloat up the unit test.
 
 `autofilldb` allows you to specify only those column values that are relevant to the unit test. `autofilldb` identifies columns that have the aformentioned constraints and automatically populates them with valid fake data. If a column has a `unique` constraint, a valid unique value would be generated. This makes your unit tests shorter and focussed on the use case being tested. 
 
@@ -65,5 +65,5 @@ The project has two modules:
 2. `autofilldb-tester` tests the library against a MySQL instance running in a Docker container.
 
 Command to build the project: `./gradlew clean build -x signArchives`
-## Authors
+## Contributors
 [sskelkar](https://github.com/sskelkar), [shreyasm](https://github.com/shreyasm), [rishikeshdhokare](https://github.com/rishikeshdhokare)
