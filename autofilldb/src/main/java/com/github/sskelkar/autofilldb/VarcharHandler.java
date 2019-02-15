@@ -1,5 +1,6 @@
 package com.github.sskelkar.autofilldb;
 
+import static com.github.sskelkar.autofilldb.Util.enquote;
 import static com.github.sskelkar.autofilldb.Util.isNullOrEmpty;
 import static java.lang.Integer.parseInt;
 import static java.util.UUID.randomUUID;
@@ -16,16 +17,12 @@ final class VarcharHandler implements DataTypeHandler<String> {
     String randomString = randomUUID().toString();
     int columnSize = parseInt(def.getDataType().replace("varchar(", "").replace(")", ""));
     String value = randomString.length() > columnSize ? randomString.substring(0, columnSize) : randomString;
-    return enQuote(value);
+    return enquote(value);
   }
 
   @Override
   public String value(String defaultValue) {
     String value = isNullOrEmpty(defaultValue) ? "a" : defaultValue;
-    return enQuote(value);
-  }
-
-  private String enQuote(String value) {
-    return "'" + value + "'";
+    return enquote(value);
   }
 }

@@ -61,4 +61,18 @@ public class UsageTest extends DBTest {
         "  unique_value_column integer not null unique)");
     autoFill.into("type_int", of("varchar_column", 10));
   }
+
+  @Test /*no exception expected*/
+  public void shouldAutoPopulatePrimaryKeyWithUniqueValues() {
+    //when
+    runSql(
+      "create table type_int(" +
+        "  id integer," +
+        "  varchar_column varchar(30) not null," +
+        "  digit_limit_column integer(4) not null," +
+        "  primary key(id))");
+
+    autoFill.into("type_int", of("varchar_column", "some string"));
+    autoFill.into("type_int", of("varchar_column", "some other string"));
+  }
 }

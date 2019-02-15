@@ -3,6 +3,10 @@
 !gradle/wrapper/gradle-wrapper.jar
 
 autofilldb/gradle.properties
+autofilldb-tester/build/
+autofilldb-tester/out/
+autofilldb/build/
+autofilldb/out/
 ### STS ###
 .apt_generated
 .classpath
