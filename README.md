@@ -61,7 +61,7 @@ But with `autofilldb`, you can keep the data setup focused on only those column 
 autoFill.into("employee", ImmutableMap.of("id", 3001, "email", "john@example.com"));
 autoFill.into("employee", ImmutableMap.of("id", 3002, "email", "jane@example.com"));
 ```
-You'd need to inject `AutoFill` bean into your test class. The above method takes in the table name and a Map of column name and value pairs that are relevant to the unit test.
+You'd need to inject `AutoFill` bean into your test class. The `AutoFill.into` method takes in the table name and a Map of column name and value pairs that are relevant to the unit test.
 
 ## Contribution guide
 ##### Pre-requisite: Docker 1.6.0 or above
