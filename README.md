@@ -5,7 +5,7 @@
 # autofilldb
 `autofilldb` is a lightweight library that can automatically populate fake data in database, while satisfying column constraints. It can be used to simplify setting up test data while writing database integration tests in a Spring based project. 
 
-Suppose you want to insert a new row in a table but you only care about the `id` field. Normally you'd need to insert a value in all the mandatory columns. But with `autofilldb`, your test data setup could be as simple as:
+Suppose you have an `employee` table that has an `id` column as the primary key and various other columns, some of which may have a `not null` constraint. You want to insert a new row in this table but you only care about the `id` field in your particular context. Normally you'd need to insert a value in all the mandatory columns. But with `autofilldb`, your data setup could be as simple as:
 ```
 autoFill.into("employee", ImmutableMap.of("id", 1))
 ```
