@@ -21,6 +21,7 @@ class AutomaticPopulater {
     dataTypeHandlerHandlers.add(new IntegerHandler());
     dataTypeHandlerHandlers.add(new VarcharHandler());
     dataTypeHandlerHandlers.add(new DatetimeHandler());
+    dataTypeHandlerHandlers.add(new BitHandler());
   }
 
   Map<String, Object> populate(String tableName, Map<String, Object> valuesProvidedByUser) {
