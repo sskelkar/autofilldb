@@ -1,6 +1,8 @@
 package autofilldbtest;
 
 import autofilldbtest.setup.DBTest;
+import com.github.sskelkar.autofilldb.RowInserter;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.jdbc.BadSqlGrammarException;
 
@@ -12,7 +14,7 @@ import static org.testcontainers.shaded.com.google.common.collect.ImmutableMap.o
 
 public class UsageTest extends DBTest {
 
-  @Test(expected = BadSqlGrammarException.class)
+  @Test(expected = RuntimeException.class)
   public void shouldThrowErrorIfAnInvalidColumnNameIsPassed() {
     //when
     runSql(
@@ -44,7 +46,7 @@ public class UsageTest extends DBTest {
     assertNotNull(columnValues.get("unique_value_column"));
   }
 
-  @Test(expected = BadSqlGrammarException.class)
+  @Test(expected = RuntimeException.class)
   public void shouldThrowErrorIfTableDoesNotExist() {
     //when
     autoFill.into("type_int", of("id", 10));
@@ -74,5 +76,19 @@ public class UsageTest extends DBTest {
 
     autoFill.into("type_int", of("varchar_column", "some string"));
     autoFill.into("type_int", of("varchar_column", "some other string"));
+  }
+
+  @Test @Ignore
+  public void shouldNotAllowSQLInjection() {
+    //when
+    runSql(
+      "create table employee(" +
+        "  id varchar(50)," +
+        "  primary key(id))");
+
+
+
+    autoFill.into("employee", of("id", "10'); drop table employee; insert into employee (id) values('10"));
+    autoFill.into("employee", of("id", "20" ));
   }
 }
