@@ -1,11 +1,12 @@
 package autofilldbtest;
 
 import autofilldbtest.setup.DBTest;
-import com.github.sskelkar.autofilldb.RowInserter;
-import org.junit.Ignore;
+import com.github.sskelkar.autofilldb.AutoFill;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.BadSqlGrammarException;
 
+import javax.sql.DataSource;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
@@ -13,6 +14,9 @@ import static org.junit.Assert.assertNotNull;
 import static org.testcontainers.shaded.com.google.common.collect.ImmutableMap.of;
 
 public class UsageTest extends DBTest {
+
+  @Autowired
+  private DataSource dataSource;
 
   @Test(expected = RuntimeException.class)
   public void shouldThrowErrorIfAnInvalidColumnNameIsPassed() {
@@ -78,7 +82,7 @@ public class UsageTest extends DBTest {
     autoFill.into("type_int", of("varchar_column", "some other string"));
   }
 
-  @Test @Ignore
+  @Test(expected = RuntimeException.class)
   public void shouldNotAllowSQLInjection() {
     //when
     runSql(
@@ -90,5 +94,17 @@ public class UsageTest extends DBTest {
 
     autoFill.into("employee", of("id", "10'); drop table employee; insert into employee (id) values('10"));
     autoFill.into("employee", of("id", "20" ));
+  }
+
+  @Test /*no exception expected*/
+  public void canUseMultipleInstancesOfAutoFill() {
+    //when
+    runSql(
+      "create table employee(" +
+        "  id varchar(50)," +
+        "  primary key(id))");
+
+    new AutoFill(dataSource).into("employee", of("id", "10"));
+    new AutoFill(dataSource).into("employee", of("id", "20"));
   }
 }

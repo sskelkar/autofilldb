@@ -8,10 +8,11 @@ import java.util.Map;
 
 import static com.github.sskelkar.autofilldb.Util.enquote;
 import static java.lang.String.format;
+import static java.lang.String.join;
 import static java.util.Collections.emptyMap;
-import static org.apache.logging.log4j.util.Strings.join;
+import static java.util.stream.Collectors.toList;
 
-class AutomaticPopulater {
+final class AutomaticPopulater {
   private List<DataTypeHandler> dataTypeHandlerHandlers = new ArrayList<>();
   private DataSource dataSource;
 
@@ -63,9 +64,9 @@ class AutomaticPopulater {
 
   private String createInsertionQuery(String tableName, Map<String, Object> columnsToPopulate) {
     return format("insert into %s (", tableName)
-      .concat(join(columnsToPopulate.keySet(), ','))
+      .concat(join(",", columnsToPopulate.keySet()))
       .concat(") values(")
-      .concat(join(columnsToPopulate.values(), ','))
+      .concat(join(",", columnsToPopulate.values().stream().map(Object::toString).collect(toList())))
       .concat(")");
   }
 

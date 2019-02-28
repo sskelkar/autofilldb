@@ -1,8 +1,5 @@
 package com.github.sskelkar.autofilldb;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.Map;
@@ -23,13 +20,11 @@ import static java.util.Collections.emptyMap;
  * <p>
  * This class requires an injectable bean of type <tt>javax.sql.DataSource</tt> in the Spring container.
  */
-@Component
 public final class AutoFill {
-
-  @Autowired
   private DataSource dataSource;
 
-  private AutoFill() {
+  public AutoFill(DataSource dataSource) {
+    this.dataSource = dataSource;
   }
 
   /**

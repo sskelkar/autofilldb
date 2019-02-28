@@ -1,5 +1,6 @@
 package autofilldbtest.setup;
 
+import com.github.sskelkar.autofilldb.AutoFill;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.context.annotation.Bean;
@@ -36,4 +37,8 @@ public class TestConfiguration {
     return txManager;
   }
 
+  @Bean
+  public AutoFill autoFill() {
+    return new AutoFill(dataSource());
+  }
 }

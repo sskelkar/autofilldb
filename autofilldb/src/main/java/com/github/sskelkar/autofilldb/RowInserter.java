@@ -7,7 +7,7 @@ import java.sql.Statement;
 
 import static java.lang.String.format;
 
-final public class RowInserter {
+final class RowInserter {
 
   private DataSource dataSource;
 
