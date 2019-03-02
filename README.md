@@ -3,7 +3,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/sskelkar/autofilldb/blob/master/license)
 
 # autofilldb
-`autofilldb` is a lightweight library that can automatically populate mock data in database, while satisfying column constraints. It can be used to simplify setting up test data while writing database integration tests in a Spring based project. 
+`autofilldb` is a lightweight library that can automatically populate mock data in database, while satisfying column constraints. It can be used to simplify setting up test data while writing database integration tests in Java projects.
 
 Suppose you have an `employee` table that has an `id` column as the primary key and various other columns, some of which may have a `not null` constraint. You want to insert a new row in this table but you only care about the `id` field in your particular context. Normally you'd need to insert a value in all the mandatory columns. But with `autofilldb`, your data setup could be as simple as:
 ```
@@ -13,7 +13,7 @@ All other column values that are irrelevant to the use case, but are necessary f
 
 This library can produce valid mock data to satisfy `not null` and `foreign key` constraints. All generated values comply with column constraints like length of column, uniqueness and data type etc.
 
-`autofilldb` requires a bean of type `javax.sql.DataSource` in the Spring container. In turn, this library provides an `AutoFill` bean that can be injected in your test class.
+`autofilldb` requires an instance type `javax.sql.DataSource` to connect to the database.
 
 ##### Supported databases: MySQL
 
@@ -58,10 +58,11 @@ There could be many more columns with `not null` constraint, and you'd need to p
 
 But with `autofilldb`, you can keep the data setup focused on only those column values that are required in the unit test. The above setup can be rewritten as following:
 ```
+AutoFill autoFill = new AutoFill(dataSource);
 autoFill.into("employee", ImmutableMap.of("id", 3001, "email", "john@example.com"));
 autoFill.into("employee", ImmutableMap.of("id", 3002, "email", "jane@example.com"));
 ```
-You'd need to inject `AutoFill` bean into your test class. The `AutoFill.into` method takes in the table name and a Map of column name and value pairs that are relevant to the unit test.
+You'd need to instantiate an `AutoFill` object in your test class. The `AutoFill.into` method takes in the table name and a Map of column name and value pairs that are relevant to the unit test.
 
 ## Contribution guide
 ##### Pre-requisite: Docker 1.6.0 or above
