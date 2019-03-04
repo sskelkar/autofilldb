@@ -9,7 +9,7 @@ final class VarcharHandler implements DataTypeHandler<String> {
 
   @Override
   public boolean canHandle(String dataType) {
-    return dataType.toLowerCase().startsWith("varchar");
+    return dataType.toLowerCase().startsWith("varchar") || dataType.toLowerCase().contains("text");
   }
 
   @Override

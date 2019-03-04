@@ -107,4 +107,18 @@ public class UsageTest extends DBTest {
     new AutoFill(dataSource).into("employee", of("id", "10"));
     new AutoFill(dataSource).into("employee", of("id", "20"));
   }
+
+  @Test /*no exception expected*/
+  public void shouldSupportTextTypes() {
+    //when
+    runSql(
+      "create table employee(" +
+        "  id varchar(50)," +
+        "  text1 text not null," +
+        "  text2 mediumtext not null," +
+        "  text3 longtext not null)");
+
+    new AutoFill(dataSource).into("employee", of("id", "10"));
+    new AutoFill(dataSource).into("employee", of("id", "20"));
+  }
 }
