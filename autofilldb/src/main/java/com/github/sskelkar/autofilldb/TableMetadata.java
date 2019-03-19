@@ -19,7 +19,7 @@ final class TableMetadata {
 
   private DataSource dataSource;
 
-  public TableMetadata(DataSource dataSource) {
+  TableMetadata(DataSource dataSource) {
     this.dataSource = dataSource;
   }
 
@@ -35,7 +35,7 @@ final class TableMetadata {
         columnDefinitions.add(new ColumnDefinition(rs));
       }
     } catch (SQLException e) {
-      throw new RuntimeException(format("Error while executing query - %s", tableName), e);
+      throw new RuntimeException(format("Error while fetching metadata for table - %s", tableName), e);
     }
 
     return columnDefinitions;

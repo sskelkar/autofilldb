@@ -35,16 +35,16 @@ public class UsageTest extends DBTest {
   public void shouldReturnAMapOfAllColumnValuesUsedToPopulateTheRow() {
     //when
     runSql(
-      "create table type_int(" +
-        "  id integer," +
+      "create table test_table(" +
+        "  id varchar(10)," +
         "  not_null_column integer not null," +
         "  digit_limit_column integer(4) not null," +
         "  unique_value_column integer not null unique)");
 
-    Map<String, Object> columnValues = autoFill.into("type_int", of("id", 10));
+    Map<String, Object> columnValues = autoFill.into("test_table", of("id", "10"));
 
     //then
-    assertEquals(10, columnValues.get("id"));
+    assertEquals("10", columnValues.get("id"));
     assertNotNull(columnValues.get("not_null_column"));
     assertNotNull(columnValues.get("digit_limit_column"));
     assertNotNull(columnValues.get("unique_value_column"));
@@ -89,8 +89,6 @@ public class UsageTest extends DBTest {
       "create table employee(" +
         "  id varchar(50)," +
         "  primary key(id))");
-
-
 
     autoFill.into("employee", of("id", "10'); drop table employee; insert into employee (id) values('10"));
     autoFill.into("employee", of("id", "20" ));
